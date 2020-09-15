@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php">
+    <testsuites>
+        <testsuite name="FizzBuzz Unit Tests">
+            <directory suffix=".php">./tests/unit/</directory>
+        </testsuite>
+        <testsuite name="FizzBuzz Integration Database">
+            <directory suffix=".php">./tests/integration</directory>
+        </testsuite>
+        <testsuite name="FizzBuzz Integration Web API">
+            <directory suffix=".php">./tests/integration</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+    mysql:
+        image: mysql:latest
+        restart: always
+        environment:
+            MYSQL_DATABASE: 'foo'
+            MYSQL_USER: 'foo'
+            MYSQL_PASSWORD: 'foo'
+            MYSQL_ROOT_PASSWORD: 'foo'
+        ports:
+            - '127.0.0.1:23306:3306'
+        # volumes: # uncomment if the data is to be persisted outside of the container
+        #     - ./var/lib/mysql:/var/lib/mysql
+    adminer:
+        image: adminer:latest
+        depends_on:
+            - mysql
+        restart: always
+        environment:
+            ADMINER_DEFAULT_DB_DRIVER: mysql
+            ADMINER_DEFAULT_SERVER: mysql
+            ADMINER_DEFAULT_DB_NAME: foo
+        ports:
+            - 127.0.0.1:28080:8080
+    php-apache:
+        depends_on: 
+            - mysql
+        build:
+            context: .
+            dockerfile: ./Dockerfile.php-apache
+        environment:
+            XDEBUG_CONFIG: remote_host=${DOCKER_XDEBUG_REMOTE_HOST:-host.docker.internal} remote_port=9000 remote_enable=1
+        ports:
+            - '20080:80'
+        volumes:
+            - './src:/var/www/html'
+        # comment out entrypoint to prevent application from inserting data into database table at container startup
+        # entrypoint: ["bash", "-c", "dockerize -wait tcp://mysql:3306 -timeout 20s && echo Checking and/or creating initial data, please wait... && php /var/www/html/dbs/foo/tables/source/create.php && echo Application is ready. && exec apache2-foreground"]
+
+    composer:
+        image: composer:latest
+        restart: "no"        
+        environment:
+            - COMPOSER_CACHE_DIR=/app/var/composer/cache
+        volumes:
+            - .:/app
+    php:
+        image: php:7.4-cli
+        restart: "no"
+        volumes:
+            - .:/app
+        working_dir: /app
+    phpunit:
+        image: php:7.4-cli        
+        build:
+            context: .
+            dockerfile: ./Dockerfile.phpunit
+        restart: "no"
+        volumes:
+            - .:/app
+        working_dir: /app
+        # alternative forms of entrypoint
+        # entrypoint: ["bash", "-c", "dockerize -wait tcp://php-apache:80 -timeout 240s && vendor/bin/phpunit --testdox"]
+        # entrypoint: ["vendor/bin/phpunit", "--testdox"]
+        entrypoint: ["vendor/bin/phpunit"]
