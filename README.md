@@ -105,7 +105,7 @@ The design motto for this application: “as simple as possible, but not simpler
 
 No attempt was made to create another framework with configuration, routing, logging, dependency injection, etc. For this there are frameworks Laravel, Symfony, Yii and so on. PHP language features like namespaces, classes, ... were not used this time.
 
-App web service endpoint URL such as `http://localhost:20080/dbs/foo/tables/source/json` suggests that `foo` and `source` could actually be variable parameters, so the app could be used to view contents of any table in any schema as long as database user has the select permission. This could be implemented in numerous ways, for example by using `mod_rewrite` (Apache web server module), but usually when there's request for such functionality, it's time to use a framework like Laravel or Symfony, where such url params are easily implemented.
+App web service endpoint URL such as `http://localhost:20080/dbs/foo/tables/source/json` suggests that `foo` and `source` could actually be variable parameters, so the app could be used to view contents of any table in any schema as long as database user has the select permission. This parametrization could be implemented in numerous ways, for example by using `mod_rewrite` (Apache web server module), but usually when there's request for such functionality, it's time to use a framework like Laravel or Symfony, where such url params are easily implemented.
 
 ### Database code
 
