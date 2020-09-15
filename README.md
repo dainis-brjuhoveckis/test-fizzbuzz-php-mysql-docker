@@ -1,4 +1,4 @@
-# FizzBuzz Application — Php, Mysql, Docker, Unit and Integration Tests
+# FizzBuzz Application — Php, Mysql, Docker, unit/integration tests
 
 ## Description
 
