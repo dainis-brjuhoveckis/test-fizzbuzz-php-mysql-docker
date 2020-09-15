@@ -4,7 +4,7 @@
 
 This application is a test assignment implementation, done by [Dainis Brjuhoveckis](mailto:dainis.brjuhovecki@gmail.com) on September 2020.
 
-It's basically a variation classic fizzbuzz, this time implemented using PHP 7, MySQL 8, Apache 2, docker-compose.
+It's basically a variation of the famous classic fizzbuzz, this time implemented using PHP 7, MySQL 8, Apache 2, docker-compose.
 
 ## Test task specification
 
@@ -16,9 +16,9 @@ It's basically a variation classic fizzbuzz, this time implemented using PHP 7, 
 
 ### Test task
 1. Fill the table `source` with 1 million rows where:
-    - column a contains the numbers from 1 to 1e6
-    - column b contains a % 3
-    - column c contains a % 5
+    - column `a` contains the numbers from 1 to 1e6
+    - column `b` contains a % 3
+    - column `c` contains a % 5
 2. Create an endpoint `/dbs/foo/tables/source/csv` which upon a `GET` request responds
 with the contents of the corresponding table serialized as CSV and using HTTP chunked
 encoding.
