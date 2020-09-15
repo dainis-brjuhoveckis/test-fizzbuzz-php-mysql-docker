@@ -103,7 +103,7 @@ docker-compose down --rmi all && sudo rm -rf var vendor .phpunit.result.cache
 
 The design motto for this application: “as simple as possible, but not simpler”, KISS and YAGNI.
 
-No attempt was made to create another framework with configuration, routing, logging, dependency injection, etc. For this there are frameworks Laravel, Symfony, Yii and so on. PHP language features like namespaces, classes, ... were not used this time.
+No attempt was made to create another framework with configuration, routing, logging, dependency injection, etc. For this there are really awesome frameworks Laravel, Symfony, Yii, Slim and these are just to name a few. PHP language features like namespaces, classes, ... were not used this time, except in the unit tests.
 
 App web service endpoint URL such as `http://localhost:20080/databases/foo/tables/bar/json` suggests that `foo` and `bar` could actually be variable parameters (`/databases/:database/tables/:table/json`), so the app could be used to view contents of any table in any database (schema) as long as MySQL user has the _select_ permission. This parametrization could be implemented in numerous ways, for example by using `mod_rewrite` (Apache web server module), but usually when there's request for such functionality, it's time to use a framework like Laravel or Symfony, where such URL params functionality is provided out of the box and easily implemented by app's code.
 
