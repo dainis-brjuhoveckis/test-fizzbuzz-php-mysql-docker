@@ -113,7 +113,7 @@ As of now, filling table `foo.bar` with 1 000 000 records takes about 1 minute 2
 
 There are several “tricks” to (maybe) make this run faster, these come to author's mind:
 - Insert several rows at once  `insert into bar (a, b, c) values (...)(...)(...)(...);`.
-- Insert just about 15 rows into database and then do `insert into bar (a, b, c) select (a+15, b, c) from bar where ...` until the necessary count is reached.
+- Insert just about 15 rows into table and then do `insert into bar (a, b, c) select (a+15, b, c) from bar where ...` until the necessary count is reached.
 - Create a file and then use MySQL's `LOAD DATA LOCAL INFILE ...`.
 
 But that would make the application's logic more complex so the author avoided that.
