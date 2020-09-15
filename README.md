@@ -11,18 +11,18 @@ It's basically a variation of the famous classic fizzbuzz, this time implemented
 ### Requirements
 - Mysql 5.7+
 - Create database `foo` in your local machine
-- Create a table `source` with three integer columns (a,b,c) in `foo`
+- Create a table `bar` with three integer columns (a,b,c) in `foo`
 - Test task should be completed in PHP 7.3/7.4
 
 ### Test task
-1. Fill the table `source` with 1 million rows where:
+1. Fill the table `bar` with 1 million rows where:
     - column `a` contains the numbers from 1 to 1e6
     - column `b` contains a % 3
     - column `c` contains a % 5
-2. Create an endpoint `/dbs/foo/tables/source/csv` which upon a `GET` request responds
+2. Create an endpoint `/databases/foo/tables/bar/csv` which upon a `GET` request responds
 with the contents of the corresponding table serialized as CSV and using HTTP chunked
 encoding.
-3. Create an endpoint `/dbs/foo/tables/source/json` which upon a `GET` request with parameters `page` and `page_size` responds with paginated contents of the corresponding table serialized as JSON. The endpoint must return a JSON array containing objects, which represent the table rows.
+3. Create an endpoint `/databases/foo/tables/bar/json` which upon a `GET` request with parameters `page` and `page_size` responds with paginated contents of the corresponding table serialized as JSON. The endpoint must return a JSON array containing objects, which represent the table rows.
 4. Write tests.
 
 ### Nice to have
@@ -44,9 +44,9 @@ docker-compose up -d
 
 ### Insertion of data
 
-This fills table `foo`.`source` with data:
+This fills table `foo`.`bar` with data:
 ```
-docker-compose run php -e src/dbs/foo/tables/source/create.php
+docker-compose run php -e src/dbs/foo/tables/bar/create.php
 ```
 (Could take a minute or two).
 
@@ -105,15 +105,15 @@ The design motto for this application: “as simple as possible, but not simpler
 
 No attempt was made to create another framework with configuration, routing, logging, dependency injection, etc. For this there are frameworks Laravel, Symfony, Yii and so on. PHP language features like namespaces, classes, ... were not used this time.
 
-App web service endpoint URL such as `http://localhost:20080/dbs/foo/tables/source/json` suggests that `foo` and `source` could actually be variable parameters, so the app could be used to view contents of any table in any schema as long as database user has the select permission. This parametrization could be implemented in numerous ways, for example by using `mod_rewrite` (Apache web server module), but usually when there's request for such functionality, it's time to use a framework like Laravel or Symfony, where such url params are easily implemented.
+App web service endpoint URL such as `http://localhost:20080/dbs/foo/tables/bar/json` suggests that `foo` and `bar` could actually be variable parameters (`/databases/:database/tables/:table/json`), so the app could be used to view contents of any table in any database (schema) as long as MySQL user has the _select_ permission. This parametrization could be implemented in numerous ways, for example by using `mod_rewrite` (Apache web server module), but usually when there's request for such functionality, it's time to use a framework like Laravel or Symfony, where such URL params functionality is provided out of the box and easily implemented by app's code.
 
 ### Database code
 
-As of now, filling table `foo.source` with 1 000 000 records takes about 1 minute 20 seconds on author's machine.
+As of now, filling table `foo.bar` with 1 000 000 records takes about 1 minute 20 seconds on author's machine.
 
 There are several “tricks” to (maybe) make this run faster, these come to author's mind:
-- Insert several rows at once  `insert into source (a, b, c) values (...)(...)(...)(...);`.
-- Insert just about 15 rows into database and then do `insert into source (a, b, c) select (a+15, b, c) from source where ...` until the necessary count is reached.
+- Insert several rows at once  `insert into bar (a, b, c) values (...)(...)(...)(...);`.
+- Insert just about 15 rows into database and then do `insert into bar (a, b, c) select (a+15, b, c) from bar where ...` until the necessary count is reached.
 - Create a file and then use MySQL's `LOAD DATA LOCAL INFILE ...`.
 
 But that would make the application's logic more complex so the author avoided that.
@@ -122,9 +122,9 @@ But that would make the application's logic more complex so the author avoided t
 
 ### CSV
 
-GET http://localhost:20080/dbs/foo/tables/source/csv
+GET http://localhost:20080/dbs/foo/tables/bar/csv
 
-Returns file that contains all the records from database table `foo.source`.
+Returns file that contains all the records from database table `foo.bar`.
 
 Example: 
 ```
@@ -140,38 +140,38 @@ a,b,c
 
 ### JSON
 
-GET http://localhost:20080/dbs/foo/tables/source/json
+GET http://localhost:20080/dbs/foo/tables/bar/json
 or
-GET http://localhost:20080/dbs/foo/tables/source/json?page=:page&page_size=:page_size (page and page_size can be any positive integer).
+GET http://localhost:20080/dbs/foo/tables/bar/json?page=:page&page_size=:page_size (page and page_size can be any positive integer).
 
 Examples:
-http://localhost:20080/dbs/foo/tables/source/json
+http://localhost:20080/dbs/foo/tables/bar/json
 ```
 [{"a":"3","b":"0","c":"3"},{"a":"4","b":"1","c":"4"}]
 ```
 
-http://localhost:20080/dbs/foo/tables/source/json?page=3&page_size=5
+http://localhost:20080/dbs/foo/tables/bar/json?page=3&page_size=5
 ```
 [{"a":"11","b":"2","c":"1"},{"a":"12","b":"0","c":"2"},{"a":"13","b":"1","c":"3"},{"a":"14","b":"2","c":"4"},{"a":"15","b":"0","c":"0"}]
 ```
 
 ### Destroy
 
-GET http://localhost:20080/dbs/foo/tables/source/destroy
+GET http://localhost:20080/dbs/foo/tables/bar/destroy
 
-Drops the table `foo.source`.
+Drops the table `foo.bar`.
 
 To re-create the data deleted by _destroy_, the _create_ endpoint can be used (see next section).
 
 ### Create
 
-GET http://localhost:20080/dbs/foo/tables/source/create
+GET http://localhost:20080/dbs/foo/tables/bar/create
 
-Creates table `foo.source` and fills it with data.
+Creates table `foo.bar` and fills it with data.
 
 Logic:
-- If there is table `foo.source`, then does nothing.
-- If there is no table `foo.source`, then creates the table `foo.source` and fills it with one million records.
+- If there is table `foo.bar`, then does nothing.
+- If there is no table `foo.bar`, then creates the table `foo.bar` and fills it with one million records.
 
 This is run automatically when the docker container starts, so unless the _destroy_ API was used, `create` is normally not needed to run.
 
@@ -183,7 +183,7 @@ Note that it runs for about 1 minute 20 seconds.
 
 This app contains also image of Adminer, a tool for working with databases, such as selecting data from tables, creating tables, making exports and imports. It is available at http://localhost:28080/?server=mysql&username=foo&db=foo (Password is "foo").
 
-When the application is running, clicking on [select source](http://localhost:28080/?server=mysql&username=foo&db=foo&select=source) in Adminer would show the rows in table `foo.source`.
+When the application is running, clicking on [select bar](http://localhost:28080/?server=mysql&username=foo&db=foo&select=bar) in Adminer would show the rows in table `foo.bar`.
 
 ### XDebug
 

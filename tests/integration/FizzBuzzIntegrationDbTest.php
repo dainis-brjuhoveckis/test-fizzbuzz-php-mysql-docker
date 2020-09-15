@@ -17,7 +17,7 @@ final class FizzBuzzIntegrationDbTest extends TestCase
 
     public function testTableRowCount1000000(): void
     {
-        $stmt = $this->pdo->prepare('SELECT count(*) as cnt FROM `source`');
+        $stmt = $this->pdo->prepare('SELECT count(*) as cnt FROM `bar`');
         $stmt->execute();
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -26,7 +26,7 @@ final class FizzBuzzIntegrationDbTest extends TestCase
 
     public function testTableRowA1(): void
     {
-        $stmt = $this->pdo->prepare('SELECT `a`, `b`, `c` FROM `source` where `a` = 1');
+        $stmt = $this->pdo->prepare('SELECT `a`, `b`, `c` FROM `bar` where `a` = 1');
         $stmt->execute();
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -36,7 +36,7 @@ final class FizzBuzzIntegrationDbTest extends TestCase
     public function testTableRowA1000000(): void
     {
         $stmt = $this->pdo->prepare(
-                'SELECT `a`, `b`, `c` FROM `source` where `a` = 1000000');
+                'SELECT `a`, `b`, `c` FROM `bar` where `a` = 1000000');
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         self::assertEquals(['a'=>'1000000', 'b'=>'1', 'c'=>'0'], $result[0]);
@@ -45,7 +45,7 @@ final class FizzBuzzIntegrationDbTest extends TestCase
     public function testTableRowAFrom1To7(): void
     {
         $stmt = $this->pdo->prepare(
-                'SELECT `a`, `b`, `c` FROM `source` where `a` between 1 and 7 order by `a`');
+                'SELECT `a`, `b`, `c` FROM `bar` where `a` between 1 and 7 order by `a`');
         $stmt->execute();
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -66,7 +66,7 @@ final class FizzBuzzIntegrationDbTest extends TestCase
     public function testTableRowsAFrom123456To123458(): void
     {
         $stmt = $this->pdo->prepare(
-            'SELECT `a`, `b`, `c` FROM `source`
+            'SELECT `a`, `b`, `c` FROM `bar`
                     where `a`
                     between 123456 and 123458 order by `a`');
         $stmt->execute();
@@ -86,7 +86,7 @@ final class FizzBuzzIntegrationDbTest extends TestCase
     public function testTableRowsAFrom999998To1000000(): void
     {
         $stmt = $this->pdo->prepare(
-            'SELECT `a`, `b`, `c` FROM `source`
+            'SELECT `a`, `b`, `c` FROM `bar`
                     where `a`
                     between 999998 and 1000000 order by `a`');
         $stmt->execute();

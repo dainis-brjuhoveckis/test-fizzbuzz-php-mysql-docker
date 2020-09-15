@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-include_once(__DIR__ . '/../../src/dbs/lib.php');
+include_once(__DIR__ . '/../../src/databases/lib.php');
 
 final class FizzBuzzIntegrationWebApiTest extends TestCase
 {
@@ -13,7 +13,7 @@ final class FizzBuzzIntegrationWebApiTest extends TestCase
 
     public function setUp(): void
     {
-        $this->http = new GuzzleHttp\Client(['base_uri' => 'http://php-apache:80/dbs/foo/tables/source/']);
+        $this->http = new GuzzleHttp\Client(['base_uri' => 'http://php-apache:80/databases/foo/tables/bar/']);
     }
 
     public function tearDown(): void {
@@ -50,7 +50,7 @@ final class FizzBuzzIntegrationWebApiTest extends TestCase
 
         self::assertEquals(200, $response->getStatusCode());        
         self::assertEquals("application/csv", $contentType);
-        self::assertEquals("attachment; filename=\"source.csv\";", $contentDisposition);
+        self::assertEquals("attachment; filename=\"bar.csv\";", $contentDisposition);
     }
 
 

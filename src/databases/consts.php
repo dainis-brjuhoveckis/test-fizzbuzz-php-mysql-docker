@@ -3,7 +3,7 @@
 const FIZZ_BUZZ_MIN = 1;
 const FIZZ_BUZZ_MAX = 1_000_000;
 
-const FIZZ_BUZZ_TABLE = 'source';
+const FIZZ_BUZZ_TABLE = 'bar';
 
 const CSV_FILE_NAME = FIZZ_BUZZ_TABLE . '.csv';
 const CSV_HEADER = ['a', 'b', 'c'];

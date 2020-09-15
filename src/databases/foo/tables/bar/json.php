@@ -14,7 +14,7 @@ if ($pageSize < 1) {
 }
 
 $stmt = $pdo->prepare('SELECT `a`, `b`, `c` 
-                       FROM `source`  ORDER BY `a` ASC 
+                       FROM `' . FIZZ_BUZZ_TABLE . '` ORDER BY `a` ASC 
                        LIMIT :limit OFFSET :offset ;');
 $limit = $pageSize;
 $offset = ($page - 1) * $pageSize;
