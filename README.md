@@ -46,7 +46,7 @@ docker-compose up -d
 
 This fills table `foo`.`bar` with data:
 ```
-docker-compose run php -e src/dbs/foo/tables/bar/create.php
+docker-compose run php -e src/databases/foo/tables/bar/create.php
 ```
 (Could take a minute or two).
 
@@ -105,7 +105,7 @@ The design motto for this application: “as simple as possible, but not simpler
 
 No attempt was made to create another framework with configuration, routing, logging, dependency injection, etc. For this there are frameworks Laravel, Symfony, Yii and so on. PHP language features like namespaces, classes, ... were not used this time.
 
-App web service endpoint URL such as `http://localhost:20080/dbs/foo/tables/bar/json` suggests that `foo` and `bar` could actually be variable parameters (`/databases/:database/tables/:table/json`), so the app could be used to view contents of any table in any database (schema) as long as MySQL user has the _select_ permission. This parametrization could be implemented in numerous ways, for example by using `mod_rewrite` (Apache web server module), but usually when there's request for such functionality, it's time to use a framework like Laravel or Symfony, where such URL params functionality is provided out of the box and easily implemented by app's code.
+App web service endpoint URL such as `http://localhost:20080/databases/foo/tables/bar/json` suggests that `foo` and `bar` could actually be variable parameters (`/databases/:database/tables/:table/json`), so the app could be used to view contents of any table in any database (schema) as long as MySQL user has the _select_ permission. This parametrization could be implemented in numerous ways, for example by using `mod_rewrite` (Apache web server module), but usually when there's request for such functionality, it's time to use a framework like Laravel or Symfony, where such URL params functionality is provided out of the box and easily implemented by app's code.
 
 ### Database code
 
@@ -122,7 +122,7 @@ But that would make the application's logic more complex so the author avoided t
 
 ### CSV
 
-GET http://localhost:20080/dbs/foo/tables/bar/csv
+GET http://localhost:20080/databases/foo/tables/bar/csv
 
 Returns file that contains all the records from database table `foo.bar`.
 
@@ -140,24 +140,24 @@ a,b,c
 
 ### JSON
 
-GET http://localhost:20080/dbs/foo/tables/bar/json
+GET http://localhost:20080/databases/foo/tables/bar/json
 or
-GET http://localhost:20080/dbs/foo/tables/bar/json?page=:page&page_size=:page_size (page and page_size can be any positive integer).
+GET http://localhost:20080/databases/foo/tables/bar/json?page=:page&page_size=:page_size (page and page_size can be any positive integer).
 
 Examples:
-http://localhost:20080/dbs/foo/tables/bar/json
+http://localhost:20080/databases/foo/tables/bar/json
 ```
 [{"a":"3","b":"0","c":"3"},{"a":"4","b":"1","c":"4"}]
 ```
 
-http://localhost:20080/dbs/foo/tables/bar/json?page=3&page_size=5
+http://localhost:20080/databases/foo/tables/bar/json?page=3&page_size=5
 ```
 [{"a":"11","b":"2","c":"1"},{"a":"12","b":"0","c":"2"},{"a":"13","b":"1","c":"3"},{"a":"14","b":"2","c":"4"},{"a":"15","b":"0","c":"0"}]
 ```
 
 ### Destroy
 
-GET http://localhost:20080/dbs/foo/tables/bar/destroy
+GET http://localhost:20080/databases/foo/tables/bar/destroy
 
 Drops the table `foo.bar`.
 
@@ -165,7 +165,7 @@ To re-create the data deleted by _destroy_, the _create_ endpoint can be used (s
 
 ### Create
 
-GET http://localhost:20080/dbs/foo/tables/bar/create
+GET http://localhost:20080/databases/foo/tables/bar/create
 
 Creates table `foo.bar` and fills it with data.
 
