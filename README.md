@@ -1,4 +1,4 @@
-# FizzBuzz Application — Php, Mysql, Docker, unit/integration tests
+# FizzBuzz Application — Php, MySQL, Docker, unit/integration tests
 
 ## Description
 
@@ -9,10 +9,10 @@ It's basically a variation of the famous classic fizzbuzz, this time implemented
 ## Test task specification
 
 ### Requirements
-- Mysql 5.7+
+- Mysql 8+
 - Create database `foo` in your local machine
 - Create a table `bar` with three integer columns (a,b,c) in `foo`
-- Test task should be completed in PHP 7.3/7.4
+- Test task should be completed in PHP 7.4
 
 ### Test task
 1. Fill the table `bar` with 1 million rows where:
