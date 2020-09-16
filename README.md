@@ -173,8 +173,6 @@ Logic:
 - If there is table `foo.bar`, then does nothing.
 - If there is no table `foo.bar`, then creates the table `foo.bar` and fills it with one million records.
 
-This is run automatically when the docker container starts, so unless the _destroy_ API was used, `create` is normally not needed to run.
-
 Note that it runs for about 1 minute 20 seconds.
 
 ## Additional tools 
