@@ -2,7 +2,7 @@
 
 ## Description
 
-This application is a test assignment implementation, done by [Dainis Brjuhoveckis](mailto:dainis.brjuhovecki@gmail.com) on September 2020.
+This application is a test assignment implementation, done by [Dainis Brjuhoveckis](mailto:dainis.brjuhoveckis@gmail.com) on September 2020.
 
 It's basically a variation of the famous classic fizzbuzz, this time implemented using PHP 7, MySQL 8, Apache 2, docker-compose.
 
