@@ -194,7 +194,7 @@ On Linux Docker does not have special hostname entry host.docker.internal, so th
 export DOCKER_XDEBUG_REMOTE_HOST=$(ip addr show | grep "\binet\b.*\bdocker0\b" | awk '{print $2}' | cut -d '/' -f 1)
 ```
 
-The above command could be added to ~/.bashrc to spare the need running this every time.
+The above command could be added to ~/.bashrc to spare the need for running this every time when a fresh terminal window is opened.
 
 As far as the author of this document knows, this is not required on Windows and Mac hosts, but that is not 100% certain as it is not tested by the author.
 
