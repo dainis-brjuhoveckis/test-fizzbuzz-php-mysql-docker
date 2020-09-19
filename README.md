@@ -124,7 +124,7 @@ But that would make the application's logic more complex so the author avoided t
 
 GET http://localhost:20080/databases/foo/tables/bar/csv
 
-Returns file that contains all the records from database table `foo.bar`.
+Returns a file that contains all the records from database table `foo.bar`.
 
 Example: 
 ```
